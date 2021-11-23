@@ -1,0 +1,94 @@
+import UIKit
+import CommonCrypto
+
+// MARK: - SHA256 ==> SHA-256 is a patented cryptographic hash function that outputs a value that is 256 bits long. What is hashing? In encryption, data is transformed into a secure format that is unreadable unless the recipient has a key. In its encrypted form, the data may be of unlimited size, often just as long as when unencrypted.
+extension Data{
+    public func sha256() -> String{
+        return hexStringFromData(input: digest(input: self as NSData))
+    }
+    
+    private func digest(input : NSData) -> NSData {
+        let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+        var hash = [UInt8](repeating: 0, count: digestLength)
+        CC_SHA256(input.bytes, UInt32(input.length), &hash)
+        return NSData(bytes: hash, length: digestLength)
+    }
+    
+    private  func hexStringFromData(input: NSData) -> String {
+        var bytes = [UInt8](repeating: 0, count: input.length)
+        input.getBytes(&bytes, length: input.length)
+        
+        var hexString = ""
+        for byte in bytes {
+            hexString += String(format:"%02x", UInt8(byte))
+        }
+        
+        return hexString
+    }
+}
+
+public extension String {
+    func sha256() -> String{
+        if let stringData = self.data(using: String.Encoding.utf8) {
+            return stringData.sha256()
+        }
+        return ""
+    }
+}
+
+// MARK: - Create Card Number
+extension Int {
+    func toStringByAddZeroToFront(numberOfDigits: Int) -> String? {
+        var nReturnVal:  String?
+        let strNum = String(self)
+        if numberOfDigits > strNum.count {
+        let addedDigits = numberOfDigits - strNum.count
+            var jointStr = ""
+            for _ in 0..<addedDigits {
+              jointStr += "0"
+            }
+            nReturnVal = jointStr + strNum
+            return nReturnVal
+        } else if numberOfDigits == strNum.count {
+            return strNum
+        } else {
+            print("Unable to convert \(strNum) to \(numberOfDigits) digit number with 0 in the front.")
+            return nReturnVal
+        }
+    }
+}
+
+// MARK: - TEST AND Example
+func addDigit() {
+    var nReturnVal: String
+    let strNum = String(15)
+    let addedDigits = 4 - strNum.count
+        var jointStr = ""
+    for _ in 0..<addedDigits {
+      jointStr += "0"
+    }
+    nReturnVal = jointStr + strNum
+    print("=================== nReturnVal \(nReturnVal)======================")
+}
+
+addDigit()
+27.toStringByAddZeroToFront(numberOfDigits: 2)
+
+func createCardNumber() -> String? {
+    var nReturnVal: String?
+    let cardType = 0
+    let cardNumber = 27
+    let siteCode = 27
+    let operatorId = 15
+    guard let strCardType = cardType.toStringByAddZeroToFront(numberOfDigits: 1),
+    let strCardNumber = cardNumber.toStringByAddZeroToFront(numberOfDigits: 7),
+    let strSiteCode = siteCode.toStringByAddZeroToFront(numberOfDigits: 4),
+    let strOperatorId = operatorId.toStringByAddZeroToFront(numberOfDigits: 4) else {return nReturnVal}
+    nReturnVal = "\(strCardType)\(strOperatorId)\(strSiteCode)\(strCardNumber)"
+    return nReturnVal
+    
+}
+
+let newCardNum = createCardNumber()
+print("\n\n+++++++++++ TEST  => newCardNum : \(newCardNum) +++++++++++ AT LINE : \(#line) +++ OF \(#function) +++ IN \(#file) +++++++++++\n\n")
+newCardNum?.sha256()
