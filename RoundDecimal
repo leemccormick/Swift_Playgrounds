@@ -1,0 +1,102 @@
+import UIKit
+
+var greeting = "Hello, playground"
+
+extension Double {
+    var toString: String {
+        return String(self)
+    }
+    
+    func rounded(toPlaces places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+    
+    func returnNickelRounded() -> Double {
+        var outAmt :Double = 0.0
+    //    try {
+            outAmt = ceil(self * 20) / 20
+    //    }
+    //    catch (ex: Exception)
+    //    {   outAmt = this
+    //        Timber.e("Features-ReturnNickelRounded: $ex")
+    //    }
+        return outAmt
+    }
+    
+    var toString2decimalPlaces: String {
+//        let testDouble = 45.6789
+//        //let raw = "Angle: \(angle)"
+//        let formattedDouble = String(format: "%.2f", self)
+
+        return String(format: "%.2f", self)
+    }
+//
+//    func round(_ value: Double, toNearest: Double) -> Double {
+//        return round(value / toNearest, toNearest: <#Double#>) * toNearest
+//    }
+    
+//    func roundToNearestValue(value: Double) -> Double {
+//           let remainder = self % value
+//           let shouldRoundUp = remainder >= value/2 ? true : false
+//           let multiple = floor(self / value)
+//           let returnValue = !shouldRoundUp ? value * multiple : value * multiple + value
+//           return returnValue
+//       }
+}
+
+extension String {
+    var strNumberToStr2DecimalPlaces: String {
+        let doubleString = Double(self) ?? 0.0
+        return doubleString.toString2decimalPlaces
+    }
+}
+
+let test = 0.3
+
+let changeTest = Double(test * 100).rounded(toPlaces: 2).toString
+
+let amount = 1234.01
+
+let gross = 11.46
+let round = amount.returnNickelRounded()
+let roundGross = String(gross.returnNickelRounded())
+
+let roundGrossInString = gross.returnNickelRounded().toString2decimalPlaces
+
+let angle = 45.6789
+let raw = "Angle: \(angle)"
+let formatted = String(format: "Angle: %.2f", angle)
+
+
+
+let testDouble = 45.6789
+//let raw = "Angle: \(angle)"
+let formattedDouble = String(format: "%.2f", testDouble)
+
+let testString = "455.45454"
+let changeTo2decimal = Double(testString)?.toString2decimalPlaces
+let zero = "0"
+let change0ToDecimal = Double(zero)?.toString2decimalPlaces
+
+let testStr1 = "0".strNumberToStr2DecimalPlaces
+
+//func currencyInString(num: Double) -> String {
+//    let numberStringInCurrency = num.numberInEachCurrency.string(from: NSNumber(value: num))
+//    return numberStringInCurrency ?? "$ 00.00"
+//}
+//
+//
+
+//func returnNickelRounded() -> Double {
+//    var outAmt :Double = 0.0
+//
+////    try {
+//        outAmt = ceil( * 20) / 20
+////    }
+////    catch (ex: Exception)
+////    {   outAmt = this
+////        Timber.e("Features-ReturnNickelRounded: $ex")
+////    }
+//    return outAmt
+//}
