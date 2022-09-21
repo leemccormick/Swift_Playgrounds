@@ -47,6 +47,8 @@ extension Date {
         case monthDayYearWithTimestampForId = "MM/dd/yyyy hh:mm:ss a"
         case utcFormatterFromAPI = "yyyy-MM-ddTHH:mm:ssZ"
         case fullName = "MMMM dd',' yyyy"
+        case year = "yyyy"
+        case shortNameNoYear = "d MMM"
     }
     
     enum DateFormatTypeTest: String {
@@ -167,6 +169,30 @@ datePurchased.toDate()?.toString(format: .utcFormatterFromAPI)
 datePurchased.toDate()?.toString(format: .fullName)
 datePurchased.toDate()?.toString(format: .fullNumericTimestamp)
 datePurchased.toDate()?.toString(format: .fullName)
+datePurchased.toDate()?.toString(format: .year)
+datePurchased.toDate()?.toString(format: .shortNameNoYear)
+
+let dateForTransaction = "2022-01-13T15:53:44.580Z"
+let dateForTransaction2 = "2027-06-13T15:53:44.580Z"
+dateForTransaction.toDate()?.toString(format: .year)
+dateForTransaction.toDate()?.toString(format: .shortNameNoYear)
+dateForTransaction2.toDate()?.toString(format: .year)
+dateForTransaction2.toDate()?.toString(format: .shortNameNoYear)
+
+
+let testDate0 = "2022-01-01T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+let testDate1 = "2022-02-04T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+let testDate2 = "2022-06-11T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+let testDate3 = "2022-12-31T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+
+"2022-05-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-06-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-07-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-08-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-09-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-10-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-11-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
+"2022-12-13T15:53:44.580Z".toDate()?.toString(format: .shortNameNoYear)
 
 // MARK: - Double Playground
 extension Double {
